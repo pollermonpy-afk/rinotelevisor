@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Rino Sin Fronteras 2026 – Disertantes</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div class="bg"></div>
+<div id="particles" style="position:fixed;inset:0;z-index:1;pointer-events:none"></div>
+<div class="top-line"></div>
+
+<div class="header">
+  <div class="logo-wrap">
+    <img src="fotos/logo.png" alt="Rino Sin Fronteras" onerror="this.style.display='none'"/>
+    <div>
+      <div class="logo-name">RINO SIN FRONTERAS</div>
+      <div class="logo-sub">Rinoplastia · Cirugía Plástica Facial</div>
+    </div>
+  </div>
+  <div class="event-meta">
+    <div class="event-dates">14 · 15 · 16 de Mayo 2026</div>
+    <div class="event-place">Ciudad del Este · Paraguay</div>
+  </div>
+</div>
+
+<div id="stage"><div id="slides"></div></div>
+
+<div class="bottom-bar">
+  <span class="event-tag">II Workshop Internacional · Rinoplastia y Cirugía Plástica Facial</span>
+  <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+  <span class="slide-counter" id="counter">1 / 25</span>
+</div>
+
+<script>
+const flagMap={'Paraguay':'fotos/flags/PY.png','Argentina':'fotos/flags/AR.png','Brasil':'fotos/flags/BR.png','Chile':'fotos/flags/Chile.png','Colombia':'fotos/flags/CO.png','Bolivia':'fotos/flags/BO.png'};
+
+const doctors=[
+  {name:"Dr. Héctor Céspedes",    photo:"hector-cespedes.png",   role:"Director",              specialty:"Otorrinolaringología · Cirugía Plástica Facial",country:"Paraguay", talk:"Director del Instituto Dr. Héctor Céspedes",           ig:"institutocespedes"},
+  {name:"Dr. Raúl Samaniego",     photo:"raul-samaniego.png",    role:"Director",              specialty:"Otorrinolaringología · Cirugía Plástica Facial",country:"Paraguay", talk:"",                                                    ig:"dr.raulsamaniego"},
+  {name:"Dr. Luis Chinski",       photo:"luis-chinski.png",      role:"Invitado Internacional",specialty:"Otorrinolaringólogo · Cirugía Plástica Facial", country:"Argentina",talk:"Rinoplastia de Preservación",                         ig:"luischinski"},
+  {name:"Dr. Gustavo Coelho",     photo:"gustavo-coelho.png",    role:"Invitado Internacional",specialty:"Otorrinolaringólogo · Cirugía Plástica Facial", country:"Brasil",   talk:"Rinoplastia Estructurada · Nasal Tip Skin Fit",      ig:"drgustavocoelho"},
+  {name:"Dra. Leila Freire",      photo:"leila-freire.png",      role:"Invitada Internacional",specialty:"Otorrinolaringóloga · Cirugía Plástica Facial", country:"Brasil",   talk:"Rinoplastia Secundaria · Manejo de base alar",       ig:"dra.leilafreire"},
+  {name:"Dr. Roberto Ferrero",    photo:"roberto-ferrero.png",   role:"Invitado Internacional",specialty:"Otorrinolaringólogo · Cirugía Plástica Facial", country:"Argentina",talk:"Rinoplastia Secundaria · Manto de gel de fibrina",    ig:"dr.robertoferrero"},
+  {name:"Dr. Cristian Simons",    photo:"cristian-simons.png",   role:"Invitado Internacional",specialty:"Otorrinolaringólogo · Cirugía Plástica Facial", country:"Chile",    talk:"Manejo del tercio superior y medio nasal",            ig:"dr.cristian.simons"},
+  {name:"Dr. Niro Reis",          photo:"niro-reis.png",         role:"Invitado Internacional",specialty:"Otorrinolaringólogo · Cirugía Plástica Facial", country:"Brasil",   talk:"",                                                    ig:"niroreismd"},
+  {name:"Dr. Paulo Garcia",       photo:"paulo-garcia.png",      role:"Invitado Internacional",specialty:"Otorrinolaringólogo · Cirugía Plástica Facial", country:"Brasil",   talk:"",                                                    ig:"drpaulogarcia"},
+  {name:"Dr. Ramirez Sanches",    photo:"ramirez-sanches.png",   role:"Invitado Internacional",specialty:"Otorrinolaringólogo · Cirugía Plástica Facial", country:"Brasil",   talk:"",                                                    ig:"ramirezsanches_"},
+  {name:"Dr. Cristian Barbón",    photo:"cristian-barbon.png",   role:"Disertante",            specialty:"Cirugía Plástica Facial · Rinoplastia",         country:"Argentina",talk:"Manejo del pilar central en rinoplastia",              ig:"dr.cristian.barbon"},
+  {name:"Dr. Santiago Herrera",   photo:"santiago-herrera.png",  role:"Disertante",            specialty:"Cirugía Plástica Facial · Rinoplastia",         country:"Colombia", talk:"Rinoplastia: Arte y Belleza",                         ig:"drsantiagoherrera"},
+  {name:"Dra. Heloisa Koerner",   photo:"heloisa-korner.png",    role:"Disertante",            specialty:"Cirugía Plástica Facial · Rinoplastia",         country:"Brasil",   talk:"Cephalic flap · Infecciones en Rinoplastia",         ig:"draheloisakoerner"},
+  {name:"Dr. Walter Humpola",     photo:"walter-humpola.png",    role:"Disertante",            specialty:"Cirugía Plástica Facial · Rinoplastia",         country:"Paraguay", talk:"Punta nasal en rinoplastia secundaria",               ig:"humpolawalter"},
+  {name:"Dra. Claudia Ciuffi",    photo:"claudia-ciuffi.png",    role:"Disertante",            specialty:"Cirugía Plástica Facial · Rinoplastia",         country:"Brasil",   talk:"Injertos para la punta nasal",                        ig:"rinoplastiaclaudiaciuffi"},
+  {name:"Dra. Claudia Guaqueta",  photo:"claudia-guaqueta.png",  role:"Disertante",            specialty:"Cirugía Plástica Facial",                       country:"Colombia", talk:"",                                                    ig:"derma.claudia"},
+  {name:"Dra. Elen de Masi",      photo:"elen-de-masi.png",      role:"Disertante",            specialty:"Cirugía Plástica Facial · Oculoplastia",        country:"Brasil",   talk:"",                                                    ig:"draelendemasi"},
+  {name:"Dra. Flavia Diniz",      photo:"flavia-diniz.png",      role:"Disertante",            specialty:"Cirugía Plástica Facial",                       country:"Brasil",   talk:"",                                                    ig:"draflaviadiniz"},
+  {name:"Dr. Humberto Ferreira",  photo:"humberto-ferreira.png", role:"Disertante",            specialty:"Cirugía Plástica Facial",                       country:"Brasil",   talk:"",                                                    ig:"drhumbertoferreira"},
+  {name:"Dr. Julián Trujillo",    photo:"julian-trujillo.png",   role:"Disertante",            specialty:"Cirugía Plástica Facial · Rinoplastia",         country:"Colombia", talk:"",                                                    ig:"dr.juliantrujillo"},
+  {name:"Dr. Miguel Cupito",      photo:"miguel-cupito.png",     role:"Disertante",            specialty:"Cirugía Plástica Facial",                       country:"Argentina",talk:"",                                                    ig:"dr.miguelcupito_rinoplastia"},
+  {name:"Dr. Paolo Pegoraro",     photo:"paolo-pegoraro.png",    role:"Disertante",            specialty:"Cirugía Plástica Facial",                       country:"Argentina",talk:"",                                                    ig:"dr.paolo.pegoraro"},
+  {name:"Dr. Rodolfo Toledo",     photo:"rodolfo-toledo.png",    role:"Disertante",            specialty:"Cirugía Plástica Facial · Rejuvenecimiento",    country:"Brasil",   talk:"",                                                    ig:"drrodolfotoledo"},
+  {name:"Dr. Sergio De Paoli",    photo:"sergio-de-paoli.png",   role:"Disertante",            specialty:"Cirugía Plástica Facial",                       country:"Brasil",   talk:"",                                                    ig:"drsergiodepaoli.cirurgiao"},
+  {name:"Dr. Vinicius Cruz",      photo:"vinicius-cruz.png",     role:"Disertante",            specialty:"Cirugía Plástica Facial · Rinoplastia",         country:"Brasil",   talk:"",                                                    ig:"viniciuscruzmd"},
+];
+
+const agenda=[
+  {time:"08:00",label:"Inscripción y entrega de materiales"},
+  {time:"09:00",label:"Apertura · Palabras de bienvenida — Dr. Héctor Céspedes & Dr. Raúl Samaniego"},
+  {time:"09:20",label:"Mi filosofía en Rinoplastia Primaria — L. Chinski (Preservación) · G. Coelho (Estructurada)"},
+  {time:"10:00",label:"🔴 Cirugías en vivo — Rinoplastia Primaria — L. Chinski · G. Coelho"},
+  {time:"",     label:"Moderador: Dr. Cristian Barbón"},
+  {time:"13:00",label:"Conferencia — Rinoplastia, Arte y Belleza — Santiago Herrera"},
+  {time:"13:20",label:"Conferencia — Manejo del pilar central — Cristian Barbón"},
+  {time:"13:40",label:"Conferencia — Cephalic flap · Crus lateral y posición domal — Heloisa Koerner"},
+  {time:"14:00",label:"🍽️  Almuerzo"},
+  {time:"15:00",label:"Mi filosofía en Rinoplastia Secundaria — Leila Freire · Roberto Ferrero"},
+  {time:"15:40",label:"🔴 Cirugías en vivo — Rinoplastia Secundaria — L. Freire · R. Ferrero"},
+  {time:"",     label:"Moderador: Dr. Cristian Barbón"},
+  {time:"18:00",label:"Conferencia — Tercio superior y medio nasal — Cristian Simons"},
+  {time:"18:20",label:"Conferencia — Punta nasal en rinoplastia secundaria — Walter Humpola"},
+  {time:"18:40",label:"Conferencia — Injertos que definen la punta nasal — Claudia Ciuffi"},
+  {time:"19:00",label:"Conferencia — Infecciones en Rinoplastia — Heloisa Koerner"},
+  {time:"19:20",label:"Comentarios finales de los casos operados"},
+  {time:"",     label:"L. Chinski (+ Expansión columelar) · G. Coelho (+ Nasal Tip Skin Fit)"},
+  {time:"",     label:"L. Freire (+ base alar) · R. Ferrero (+ manto gel de fibrina)"},
+  {time:"21:00",label:"🎶  Cena y Concierto — Juanchi Álvarez (saxo y violín)"},
+];
+
+const slidesEl=document.getElementById('slides');
+const bar=document.getElementById('progressBar');
+const counter=document.getElementById('counter');
+const DURATION=6000;
+let current=0,rafId=null,startTime=null;
+
+// Doctor slides
+doctors.forEach((d,i)=>{
+  const div=document.createElement('div');
+  div.className='slide'+(i===0?' active':'');
+  const flagSrc=flagMap[d.country]||'';
+  div.innerHTML=`<div class="card">
+    <div class="photo-col"><div class="circle-outer"><div class="ring-dot"></div><div class="circle-inner"><img src="fotos/${d.photo}" alt="${d.name}"/></div></div></div>
+    <div class="info-col">
+      <div class="line-top"></div>
+      <span class="role-badge${d.role==='Director'?' director':''}">${d.role}</span>
+      <h2 class="doctor-name">${d.name.replace(' ','<br>')}</h2>
+      <p class="specialty">${d.specialty}</p>
+      <div class="country-row">${flagSrc?`<img class="flag-img" src="${flagSrc}" alt="${d.country}"/>`:''}
+        <span class="country-name">${d.country}</span></div>
+      ${d.talk?`<p class="talk">${d.talk}</p>`:''}
+      ${d.ig?`<p class="instagram"><span class="ig-at">@</span>${d.ig}</p>`:''}
+      <div class="line-bot"></div>
+    </div></div>`;
+  slidesEl.appendChild(div);
+});
+
+// Agenda slide
+const rows=agenda.map(a=>`<div class="agenda-row"><span class="agenda-time">${a.time}</span><span class="agenda-label">${a.label}</span></div>`).join('');
+const agDiv=document.createElement('div');
+agDiv.className='slide agenda-slide';
+agDiv.innerHTML=`<div class="agenda-wrap">
+  <div><p class="agenda-day-tag">DÍA 1 · LUNES 14 DE MAYO 2026</p><h2 class="agenda-title">Programa · Rinoplastia</h2></div>
+  <div class="agenda-ticker-outer"><div id="agTicker"><div class="agenda-inner" id="agInner">${rows}${rows}</div></div></div>
+</div>`;
+slidesEl.appendChild(agDiv);
+
+const slides=document.querySelectorAll('.slide');
+const TOTAL=slides.length;
+counter.textContent='1 / '+TOTAL;
+
+// Particles
+const pEl=document.getElementById('particles');
+for(let i=0;i<22;i++){
+  const p=document.createElement('div');p.className='particle';
+  const s=Math.random()*55+10;
+  p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;animation-duration:${Math.random()*18+10}s;animation-delay:${Math.random()*-25}s`;
+  pEl.appendChild(p);
+}
+
+// Agenda ticker
+let agPos=0,agRaf=null,agRunning=false;
+function runTicker(){
+  if(agRunning)return;agRunning=true;
+  const inner=document.getElementById('agInner');
+  if(!inner)return;
+  const half=inner.scrollHeight/2;
+  (function tick(){agRaf=requestAnimationFrame(tick);agPos+=0.5;if(agPos>=half)agPos=0;inner.style.transform=`translateY(-${agPos}px)`})();
+}
+function stopTicker(){agRunning=false;cancelAnimationFrame(agRaf);}
+
+function animateProg(dur,cb){
+  cancelAnimationFrame(rafId);startTime=performance.now();
+  bar.style.transition='none';bar.style.width='0%';
+  requestAnimationFrame(()=>requestAnimationFrame(function t(now){
+    const p=Math.min(((now-startTime)/dur)*100,100);
+    bar.style.width=p+'%';
+    if(p<100)rafId=requestAnimationFrame(t);else setTimeout(cb,50);
+  }));
+}
+
+function showSlide(idx){
+  slides[current].classList.remove('active');
+  current=((idx%TOTAL)+TOTAL)%TOTAL;
+  slides[current].classList.add('active');
+  counter.textContent=(current+1)+' / '+TOTAL;
+  if(slides[current].classList.contains('agenda-slide')){
+    runTicker();animateProg(20000,()=>showSlide(current+1));
+  } else {
+    stopTicker();animateProg(DURATION,()=>showSlide(current+1));
+  }
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '){cancelAnimationFrame(rafId);showSlide(current+1);}
+  if(e.key==='ArrowLeft'){cancelAnimationFrame(rafId);showSlide(current-1);}
+  if(e.key==='f'||e.key==='F')document.documentElement.requestFullscreen?.();
+});
+
+animateProg(DURATION,()=>showSlide(1));
+
+
+
+</script>
+</body>
+</html>

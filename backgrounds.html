@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fondos – Rinos sin Fronteras</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #000;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    /* ── FONDO 1: Gradiente médico azul ── */
+    .bg-1 {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #0a1628 0%, #0d2a4e 40%, #0057B8 75%, #00a8e8 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bg-1::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 50%, rgba(0,87,184,0.35) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 80% 40%, rgba(0,168,232,0.2) 0%, transparent 65%);
+      animation: pulse 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulse {
+      from { opacity: 0.6; }
+      to   { opacity: 1; }
+    }
+
+    /* Partículas flotantes */
+    .particles {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      animation: float linear infinite;
+    }
+
+    @keyframes float {
+      0%   { transform: translateY(110vh) scale(0); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 0.5; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+    }
+
+    /* Líneas de cuadrícula sutil */
+    .grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* Cruz médica decorativa */
+    .cross-container {
+      position: absolute;
+      right: 8%;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.08;
+    }
+    .cross {
+      width: 180px;
+      height: 180px;
+      position: relative;
+    }
+    .cross::before, .cross::after {
+      content: '';
+      position: absolute;
+      background: #fff;
+      border-radius: 6px;
+    }
+    .cross::before { width: 100%; height: 33%; top: 33%; left: 0; }
+    .cross::after  { width: 33%; height: 100%; top: 0; left: 33%; }
+
+    /* Texto central demo */
+    .center-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+    }
+    .label {
+      font-size: 0.75rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 1rem;
+    }
+    .title {
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.6) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .subtitle {
+      margin-top: 1.25rem;
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.08em;
+    }
+
+    /* Barra inferior */
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #00a8e8 30%, #0057B8 70%, transparent);
+      animation: shimmer 3s ease-in-out infinite;
+    }
+    @keyframes shimmer {
+      0%,100% { opacity: 0.6; }
+      50%      { opacity: 1; }
+    }
+
+    /* Selector de fondo (demo) */
+    .selector {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.5rem;
+      z-index: 100;
+    }
+    .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .dot.active { background: #fff; }
+  </style>
+</head>
+<body>
+
+  <!-- FONDO 1: Médico Azul Profundo -->
+  <div class="bg-1" id="bg1">
+
+    <div class="particles" id="particles"></div>
+    <div class="grid-overlay"></div>
+
+    <div class="cross-container">
+      <div class="cross"></div>
+    </div>
+
+    <div class="center-content">
+      <p class="label">Evento Mayo 2026</p>
+      <h1 class="title">Rinos<br>sin Fronteras</h1>
+      <p class="subtitle">Excelencia Médica · Rinología · Paraguay</p>
+    </div>
+
+    <div class="bottom-bar"></div>
+  </div>
+
+  <!-- Selector de puntos -->
+  <div class="selector">
+    <div class="dot active" onclick="selectBg(0)"></div>
+    <div class="dot" onclick="selectBg(1)"></div>
+    <div class="dot" onclick="selectBg(2)"></div>
+  </div>
+
+  <script>
+    // ── Generar partículas ──
+    const container = document.getElementById('particles');
+    for (let i = 0; i < 28; i++) {
+      const p = document.createElement('div');
+      p.classList.add('particle');
+      const size = Math.random() * 80 + 20;
+      p.style.cssText = `
+        width: ${size}px;
+        height: ${size}px;
+        left: ${Math.random() * 100}%;
+        animation-duration: ${Math.random() * 18 + 10}s;
+        animation-delay: ${Math.random() * -20}s;
+      `;
+      container.appendChild(p);
+    }
+
+    // ── Selector de variantes ──
+    const palettes = [
+      { from: '#0a1628', via: '#0d2a4e', to: '#0057B8', accent: '#00a8e8' },
+      { from: '#0d1b0e', via: '#0a3d1a', to: '#006b3c', accent: '#00c97a' },
+      { from: '#1a0a2e', via: '#2d1060', to: '#5b21b6', accent: '#a78bfa' },
+    ];
+
+    function selectBg(idx) {
+      const p = palettes[idx];
+      document.querySelector('.bg-1').style.background =
+        `linear-gradient(135deg, ${p.from} 0%, ${p.via} 40%, ${p.to} 75%, ${p.accent} 100%)`;
+      document.querySelector('.bottom-bar').style.background =
+        `linear-gradient(90deg, transparent, ${p.accent} 30%, ${p.to} 70%, transparent)`;
+      document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+    }
+  </script>
+</body>
+</html>
