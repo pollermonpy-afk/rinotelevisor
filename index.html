@@ -88,6 +88,15 @@ const agenda=[
   {time:"21:00",label:"🎶  Cena y Concierto — Juanchi Álvarez (saxo y violín)"},
 ];
 
+const agendaDia2=[
+  {time:"08:00",label:"Apertura del Día 2"},
+  {time:"09:00",label:"[Espacio para el cronograma del Viernes]"},
+  {time:"10:30",label:"[Envíame las charlas y las agregaré aquí]"},
+  {time:"13:00",label:"🍽️ Almuerzo"},
+  {time:"14:00",label:"[Más actividades del Viernes]"},
+  {time:"18:00",label:"Cierre del Día 2"},
+];
+
 const slidesEl=document.getElementById('slides');
 const bar=document.getElementById('progressBar');
 const counter=document.getElementById('counter');
@@ -115,15 +124,25 @@ doctors.forEach((d,i)=>{
   slidesEl.appendChild(div);
 });
 
-// Agenda slide
+// Agenda slide Día 1
 const rows=agenda.map(a=>`<div class="agenda-row"><span class="agenda-time">${a.time}</span><span class="agenda-label">${a.label}</span></div>`).join('');
 const agDiv=document.createElement('div');
 agDiv.className='slide agenda-slide';
 agDiv.innerHTML=`<div class="agenda-wrap">
-  <div><p class="agenda-day-tag">DÍA 1 · LUNES 14 DE MAYO 2026</p><h2 class="agenda-title">Programa · Rinoplastia</h2></div>
-  <div class="agenda-ticker-outer"><div id="agTicker"><div class="agenda-inner" id="agInner">${rows}${rows}</div></div></div>
+  <div><p class="agenda-day-tag">DÍA 1 · JUEVES 14 DE MAYO 2026</p><h2 class="agenda-title">Programa · Rinoplastia</h2></div>
+  <div class="agenda-ticker-outer"><div class="agTicker"><div class="agenda-inner">${rows}${rows}</div></div></div>
 </div>`;
 slidesEl.appendChild(agDiv);
+
+// Agenda slide Día 2
+const rows2=agendaDia2.map(a=>`<div class="agenda-row"><span class="agenda-time">${a.time}</span><span class="agenda-label">${a.label}</span></div>`).join('');
+const agDiv2=document.createElement('div');
+agDiv2.className='slide agenda-slide';
+agDiv2.innerHTML=`<div class="agenda-wrap">
+  <div><p class="agenda-day-tag">DÍA 2 · VIERNES 15 DE MAYO 2026</p><h2 class="agenda-title">Programa · Viernes</h2></div>
+  <div class="agenda-ticker-outer"><div class="agTicker"><div class="agenda-inner">${rows2}${rows2}</div></div></div>
+</div>`;
+slidesEl.appendChild(agDiv2);
 
 const slides=document.querySelectorAll('.slide');
 const TOTAL=slides.length;
@@ -142,12 +161,12 @@ for(let i=0;i<22;i++){
 let agPos=0,agRaf=null,agRunning=false;
 function runTicker(){
   if(agRunning)return;agRunning=true;
-  const inner=document.getElementById('agInner');
+  const inner=document.querySelector('.slide.active .agenda-inner');
   if(!inner)return;
   const half=inner.scrollHeight/2;
   (function tick(){agRaf=requestAnimationFrame(tick);agPos+=0.5;if(agPos>=half)agPos=0;inner.style.transform=`translateY(-${agPos}px)`})();
 }
-function stopTicker(){agRunning=false;cancelAnimationFrame(agRaf);}
+function stopTicker(){agRunning=false;cancelAnimationFrame(agRaf);agPos=0;}
 
 function animateProg(dur,cb){
   cancelAnimationFrame(rafId);startTime=performance.now();
