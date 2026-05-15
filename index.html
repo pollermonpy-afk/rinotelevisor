@@ -89,12 +89,19 @@ const agenda=[
 ];
 
 const agendaDia2=[
-  {time:"08:00",label:"Apertura del Día 2"},
-  {time:"09:00",label:"[Espacio para el cronograma del Viernes]"},
-  {time:"10:30",label:"[Envíame las charlas y las agregaré aquí]"},
-  {time:"13:00",label:"🍽️ Almuerzo"},
-  {time:"14:00",label:"[Más actividades del Viernes]"},
-  {time:"18:00",label:"Cierre del Día 2"},
+  {time:"08:00",label:"Mi filosofía en Rejuvenecimiento Facial — P. García (Deep Plane) · R. Sanches (Frontoplastia)"},
+  {time:"10:00",label:"🔴 Cirugías en vivo — Deep Plane — P. García · R. Sánchez"},
+  {time:"10:10",label:"Conferencia — Huesos nasales (M. Cupito) · Tratamiento papada (L. Freire)"},
+  {time:"",     label:"Conferencia — Reducción frente (V. Cruz) · Front Handle (N. Reis) · Tercio medio (J. Trujillo)"},
+  {time:"13:00",label:"🍽️  Almuerzo"},
+  {time:"14:30",label:"Conferencia — Mentoplastia e implantes (R. Toledo) · Lifting tercio medio (E. de Masi)"},
+  {time:"",     label:"Conferencia — Contorno facial Mastoid Crevasse (G. Coelho)"},
+  {time:"16:00",label:"Mi filosofía en Rejuvenecimiento Facial — Reposicionamiento y Frontoplastia"},
+  {time:"",     label:"N. Reis · J. Trujillo · V. Cruz · C. Simons · S. De Paoli"},
+  {time:"16:30",label:"🔴 Cirugías en Rejuvenecimiento Facial — Casos 1 y 2 (Moderador: R. Toledo)"},
+  {time:"19:00",label:"Comentarios finales de los casos operados"},
+  {time:"",     label:"P. García (+ glándula submaxilar) · R. Sánchez (+ prevención orejas duende)"},
+  {time:"",     label:"N. Reis (+ Rejuve Lip) · V. Cruz (+ feminización) · J. Trujillo (+ Deep Plane modificado)"},
 ];
 
 const slidesEl=document.getElementById('slides');
@@ -139,7 +146,7 @@ const rows2=agendaDia2.map(a=>`<div class="agenda-row"><span class="agenda-time"
 const agDiv2=document.createElement('div');
 agDiv2.className='slide agenda-slide';
 agDiv2.innerHTML=`<div class="agenda-wrap">
-  <div><p class="agenda-day-tag">DÍA 2 · VIERNES 15 DE MAYO 2026</p><h2 class="agenda-title">Programa · Viernes</h2></div>
+  <div><p class="agenda-day-tag">DÍA 2 · VIERNES 15 DE MAYO 2026</p><h2 class="agenda-title">Programa · Rejuvenecimiento Facial</h2></div>
   <div class="agenda-ticker-outer"><div class="agTicker"><div class="agenda-inner">${rows2}${rows2}</div></div></div>
 </div>`;
 slidesEl.appendChild(agDiv2);

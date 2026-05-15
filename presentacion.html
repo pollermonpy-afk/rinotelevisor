@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rino Sin Fronteras 2026 – Disertantes</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    :root {
+      --gold: #C9A84C;
+      --gold2: #E8C97A;
+      --gold3: #F5E0A0;
+      --dark: #04080F;
+      --white: #FAFAFA;
+      --muted: rgba(255, 255, 255, 0.45);
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: var(--dark);
+      font-family: 'Inter', sans-serif
+    }
+
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: radial-gradient(ellipse 90% 70% at 50% 50%, #0D1F3C 0%, #04080F 70%)
+    }
+
+    .bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(201, 168, 76, .035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201, 168, 76, .035) 1px, transparent 1px);
+      background-size: 70px 70px
+    }
+
+    .top-line {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      z-index: 200;
+      background: linear-gradient(90deg, transparent, var(--gold) 30%, var(--gold3) 50%, var(--gold) 70%, transparent);
+      animation: shimmer 4s ease-in-out infinite
+    }
+
+    @keyframes shimmer {
+
+      0%,
+      100% {
+        opacity: .7
+      }
+
+      50% {
+        opacity: 1
+      }
+    }
+
+    /* HEADER */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 52px 0
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
+
+    .logo-wrap img {
+      height: 58px;
+      width: auto;
+      filter: drop-shadow(0 0 16px rgba(201, 168, 76, .35))
+    }
+
+    .logo-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--gold), var(--gold3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: .1em
+    }
+
+    .logo-sub {
+      font-size: .52rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 2px
+    }
+
+    .event-meta {
+      text-align: right
+    }
+
+    .event-dates {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--gold), var(--gold3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: .08em
+    }
+
+    .event-place {
+      font-size: .55rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 3px
+    }
+
+    /* BOTTOM BAR */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: 56px;
+      background: rgba(4, 8, 15, .92);
+      border-top: 1px solid rgba(201, 168, 76, .18);
+      backdrop-filter: blur(14px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+      padding: 0 52px
+    }
+
+    .event-tag {
+      font-size: .58rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: rgba(201, 168, 76, .65);
+      white-space: nowrap
+    }
+
+    .progress-track {
+      flex: 1;
+      max-width: 360px;
+      height: 2px;
+      background: rgba(255, 255, 255, .07);
+      border-radius: 2px;
+      overflow: hidden
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), var(--gold3));
+      border-radius: 2px;
+      width: 0%
+    }
+
+    .slide-counter {
+      font-size: .6rem;
+      color: var(--muted);
+      letter-spacing: .15em;
+      min-width: 52px;
+      text-align: right
+    }
+
+    /* STAGE */
+    #stage {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    #slides {
+      position: relative;
+      width: 100%;
+      height: 100%
+    }
+
+    /* SLIDE */
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .8s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 100px 52px 72px;
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: all
+    }
+
+    /* CARD — layout: foto izq, info der */
+    .card {
+      display: flex;
+      align-items: center;
+      gap: 72px;
+      width: 100%;
+      max-width: 1100px;
+      transform: translateY(16px);
+      transition: transform .8s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .slide.active .card {
+      transform: translateY(0)
+    }
+
+    /* FOTO CIRCULAR */
+    .photo-col {
+      flex-shrink: 0;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .circle-outer {
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      border: 2px solid rgba(201, 168, 76, .45);
+      padding: 6px;
+      position: relative;
+      box-shadow: 0 0 0 1px rgba(201, 168, 76, .12), 0 0 60px rgba(201, 168, 76, .1);
+      animation: glow 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        box-shadow: 0 0 0 1px rgba(201, 168, 76, .12), 0 0 40px rgba(201, 168, 76, .08)
+      }
+
+      to {
+        box-shadow: 0 0 0 1px rgba(201, 168, 76, .2), 0 0 70px rgba(201, 168, 76, .18)
+      }
+    }
+
+    .circle-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid rgba(201, 168, 76, .2);
+    }
+
+    .circle-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block
+    }
+
+    /* Punto decorativo en el ring */
+    .ring-dot {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--gold);
+      top: -3px;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0 0 12px var(--gold);
+    }
+
+    /* INFO */
+    .info-col {
+      flex: 1;
+      min-width: 0
+    }
+
+    .line-top {
+      width: 56px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin-bottom: 24px
+    }
+
+    .role-badge {
+      display: inline-block;
+      font-size: .58rem;
+      font-weight: 500;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      border-radius: 50px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(201, 168, 76, .4);
+      color: rgba(201, 168, 76, .8);
+    }
+
+    .role-badge.director {
+      border-color: var(--gold);
+      color: var(--gold2);
+      background: rgba(201, 168, 76, .1)
+    }
+
+    .doctor-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 4vw, 4.2rem);
+      font-weight: 600;
+      line-height: 1.05;
+      letter-spacing: -.01em;
+      background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, .72) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 14px;
+    }
+
+    .specialty {
+      font-size: .78rem;
+      font-weight: 300;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px
+    }
+
+    .country-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px
+    }
+
+    .flag-img {
+      width: 36px;
+      height: auto;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .5);
+      flex-shrink: 0
+    }
+
+    .country-name {
+      font-size: .7rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(201, 168, 76, .65);
+      font-weight: 400
+    }
+
+    .talk {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      font-weight: 400;
+      color: rgba(255, 255, 255, .33);
+      line-height: 1.65;
+      max-width: 440px
+    }
+
+    .instagram {
+      font-size: .75rem;
+      letter-spacing: .06em;
+      color: rgba(201, 168, 76, .6);
+      margin-top: 10px
+    }
+
+    .ig-at {
+      color: var(--gold2)
+    }
+
+    .line-bot {
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(201, 168, 76, .4), transparent);
+      margin-top: 20px
+    }
+
+    /* Particles */
+    .particle {
+      position: fixed;
+      border-radius: 50%;
+      background: rgba(201, 168, 76, 0.12);
+      pointer-events: none;
+      z-index: 1;
+      animation: floatUp linear infinite
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(110vh);
+        opacity: 0
+      }
+
+      10% {
+        opacity: 1
+      }
+
+      90% {
+        opacity: .3
+      }
+
+      100% {
+        transform: translateY(-10vh);
+        opacity: 0
+      }
+    }
+
+    /* Agenda slide */
+    .agenda-slide {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 100px 52px 72px
+    }
+
+    .agenda-wrap {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 1100px;
+      height: 100%
+    }
+
+    .agenda-day-tag {
+      font-size: .62rem;
+      letter-spacing: .38em;
+      text-transform: uppercase;
+      color: rgba(201, 168, 76, .75);
+      margin-bottom: 10px
+    }
+
+    .agenda-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-weight: 600;
+      background: linear-gradient(180deg, #fff, rgba(255, 255, 255, .65));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 24px
+    }
+
+    .agenda-ticker-outer {
+      flex: 1;
+      overflow: hidden;
+      position: relative
+    }
+
+    .agenda-ticker-outer::before,
+    .agenda-ticker-outer::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 72px;
+      z-index: 2;
+      pointer-events: none
+    }
+
+    .agenda-ticker-outer::before {
+      top: 0;
+      background: linear-gradient(to bottom, #04080F, transparent)
+    }
+
+    .agenda-ticker-outer::after {
+      bottom: 0;
+      background: linear-gradient(to top, #04080F, transparent)
+    }
+
+    .agenda-inner {
+      display: flex;
+      flex-direction: column;
+      will-change: transform
+    }
+
+    .agenda-row {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+      padding: 13px 8px;
+      border-bottom: 1px solid rgba(201, 168, 76, .08)
+    }
+
+    .agenda-time {
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: .1em;
+      min-width: 60px;
+      flex-shrink: 0
+    }
+
+    .agenda-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.18rem;
+      color: rgba(255, 255, 255, .75);
+      line-height: 1.4
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg"></div>
+  <div id="particles" style="position:fixed;inset:0;z-index:1;pointer-events:none"></div>
+  <div class="top-line"></div>
+
+  <div class="header">
+    <div class="logo-wrap">
+      <img src="fotos/logo.png" alt="Rino Sin Fronteras" onerror="this.style.display='none'" />
+      <div>
+        <div class="logo-name">RINO SIN FRONTERAS</div>
+        <div class="logo-sub">Rinoplastia · Cirugía Plástica Facial</div>
+      </div>
+    </div>
+    <div class="event-meta">
+      <div class="event-dates">14 · 15 · 16 de Mayo 2026</div>
+      <div class="event-place">Ciudad del Este · Paraguay</div>
+    </div>
+  </div>
+
+  <div id="stage">
+    <div id="slides"></div>
+  </div>
+
+  <div class="bottom-bar">
+    <span class="event-tag">II Workshop Internacional · Rinoplastia y Cirugía Plástica Facial</span>
+    <div class="progress-track">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <span class="slide-counter" id="counter">1 / 25</span>
+  </div>
+
+  <script>
+    const flagMap = { 'Paraguay': 'fotos/flags/PY.png', 'Argentina': 'fotos/flags/AR.png', 'Brasil': 'fotos/flags/BR.png', 'Chile': 'fotos/flags/Chile.png', 'Colombia': 'fotos/flags/CO.png', 'Bolivia': 'fotos/flags/BO.png' };
+
+    const doctors = [
+      { name: "Dr. Héctor Céspedes", photo: "hector-cespedes.png", role: "Director", specialty: "Otorrinolaringología · Cirugía Plástica Facial", country: "Paraguay", talk: "Director del Instituto Dr. Héctor Céspedes", ig: "institutocespedes" },
+      { name: "Dr. Raúl Samaniego", photo: "raul-samaniego.png", role: "Director", specialty: "Otorrinolaringología · Cirugía Plástica Facial", country: "Paraguay", talk: "", ig: "dr.raulsamaniego" },
+      { name: "Dr. Luis Chinski", photo: "luis-chinski.png", role: "Invitado Internacional", specialty: "Otorrinolaringólogo · Cirugía Plástica Facial", country: "Argentina", talk: "Rinoplastia de Preservación", ig: "luischinski" },
+      { name: "Dr. Gustavo Coelho", photo: "gustavo-coelho.png", role: "Invitado Internacional", specialty: "Otorrinolaringólogo · Cirugía Plástica Facial", country: "Brasil", talk: "Rinoplastia Estructurada · Nasal Tip Skin Fit", ig: "drgustavocoelho" },
+      { name: "Dra. Leila Freire", photo: "leila-freire.png", role: "Invitada Internacional", specialty: "Otorrinolaringóloga · Cirugía Plástica Facial", country: "Brasil", talk: "Rinoplastia Secundaria · Manejo de base alar", ig: "dra.leilafreire" },
+      { name: "Dr. Roberto Ferrero", photo: "roberto-ferrero.png", role: "Invitado Internacional", specialty: "Otorrinolaringólogo · Cirugía Plástica Facial", country: "Argentina", talk: "Rinoplastia Secundaria · Manto de gel de fibrina", ig: "dr.robertoferrero" },
+      { name: "Dr. Cristian Simons", photo: "cristian-simons.png", role: "Invitado Internacional", specialty: "Otorrinolaringólogo · Cirugía Plástica Facial", country: "Chile", talk: "Manejo del tercio superior y medio nasal", ig: "dr.cristian.simons" },
+      { name: "Dr. Niro Reis", photo: "niro-reis.png", role: "Invitado Internacional", specialty: "Otorrinolaringólogo · Cirugía Plástica Facial", country: "Brasil", talk: "", ig: "niroreismd" },
+      { name: "Dr. Paulo Garcia", photo: "paulo-garcia.png", role: "Invitado Internacional", specialty: "Otorrinolaringólogo · Cirugía Plástica Facial", country: "Brasil", talk: "", ig: "drpaulogarcia" },
+      { name: "Dr. Ramirez Sanches", photo: "ramirez-sanches.png", role: "Invitado Internacional", specialty: "Otorrinolaringólogo · Cirugía Plástica Facial", country: "Brasil", talk: "", ig: "ramirezsanches_" },
+      { name: "Dr. Cristian Barbón", photo: "cristian-barbon.png", role: "Disertante", specialty: "Cirugía Plástica Facial · Rinoplastia", country: "Argentina", talk: "Manejo del pilar central en rinoplastia", ig: "dr.cristian.barbon" },
+      { name: "Dr. Santiago Herrera", photo: "santiago-herrera.png", role: "Disertante", specialty: "Cirugía Plástica Facial · Rinoplastia", country: "Colombia", talk: "Rinoplastia: Arte y Belleza", ig: "drsantiagoherrera" },
+      { name: "Dra. Heloisa Koerner", photo: "heloisa-korner.png", role: "Disertante", specialty: "Cirugía Plástica Facial · Rinoplastia", country: "Brasil", talk: "Cephalic flap · Infecciones en Rinoplastia", ig: "draheloisakoerner" },
+      { name: "Dr. Walter Humpola", photo: "walter-humpola.png", role: "Disertante", specialty: "Cirugía Plástica Facial · Rinoplastia", country: "Paraguay", talk: "Punta nasal en rinoplastia secundaria", ig: "humpolawalter" },
+      { name: "Dra. Claudia Ciuffi", photo: "claudia-ciuffi.png", role: "Disertante", specialty: "Cirugía Plástica Facial · Rinoplastia", country: "Brasil", talk: "Injertos para la punta nasal", ig: "rinoplastiaclaudiaciuffi" },
+      { name: "Dra. Claudia Guaqueta", photo: "claudia-guaqueta.png", role: "Disertante", specialty: "Cirugía Plástica Facial", country: "Colombia", talk: "", ig: "derma.claudia" },
+      { name: "Dra. Elen de Masi", photo: "elen-de-masi.png", role: "Disertante", specialty: "Cirugía Plástica Facial · Oculoplastia", country: "Brasil", talk: "", ig: "draelendemasi" },
+      { name: "Dra. Flavia Diniz", photo: "flavia-diniz.png", role: "Disertante", specialty: "Cirugía Plástica Facial", country: "Brasil", talk: "", ig: "draflaviadiniz" },
+      { name: "Dr. Humberto Ferreira", photo: "humberto-ferreira.png", role: "Disertante", specialty: "Cirugía Plástica Facial", country: "Brasil", talk: "", ig: "drhumbertoferreira" },
+      { name: "Dr. Julián Trujillo", photo: "julian-trujillo.png", role: "Disertante", specialty: "Cirugía Plástica Facial · Rinoplastia", country: "Colombia", talk: "", ig: "dr.juliantrujillo" },
+      { name: "Dr. Miguel Cupito", photo: "miguel-cupito.png", role: "Disertante", specialty: "Cirugía Plástica Facial", country: "Argentina", talk: "", ig: "dr.miguelcupito_rinoplastia" },
+      { name: "Dr. Paolo Pegoraro", photo: "paolo-pegoraro.png", role: "Disertante", specialty: "Cirugía Plástica Facial", country: "Argentina", talk: "", ig: "dr.paolo.pegoraro" },
+      { name: "Dr. Rodolfo Toledo", photo: "rodolfo-toledo.png", role: "Disertante", specialty: "Cirugía Plástica Facial · Rejuvenecimiento", country: "Brasil", talk: "", ig: "drrodolfotoledo" },
+      { name: "Dr. Sergio De Paoli", photo: "sergio-de-paoli.png", role: "Disertante", specialty: "Cirugía Plástica Facial", country: "Brasil", talk: "", ig: "drsergiodepaoli.cirurgiao" },
+      { name: "Dr. Vinicius Cruz", photo: "vinicius-cruz.png", role: "Disertante", specialty: "Cirugía Plástica Facial · Rinoplastia", country: "Brasil", talk: "", ig: "viniciuscruzmd" },
+    ];
+
+    const agenda = [
+      { time: "08:00", label: "Inscripción y entrega de materiales" },
+      { time: "09:00", label: "Apertura · Palabras de bienvenida — Dr. Héctor Céspedes & Dr. Raúl Samaniego" },
+      { time: "09:20", label: "Mi filosofía en Rinoplastia Primaria — L. Chinski (Preservación) · G. Coelho (Estructurada)" },
+      { time: "10:00", label: "🔴 Cirugías en vivo — Rinoplastia Primaria — L. Chinski · G. Coelho" },
+      { time: "", label: "Moderador: Dr. Cristian Barbón" },
+      { time: "13:00", label: "Conferencia — Rinoplastia, Arte y Belleza — Santiago Herrera" },
+      { time: "13:20", label: "Conferencia — Manejo del pilar central — Cristian Barbón" },
+      { time: "13:40", label: "Conferencia — Cephalic flap · Crus lateral y posición domal — Heloisa Koerner" },
+      { time: "14:00", label: "🍽️  Almuerzo" },
+      { time: "15:00", label: "Mi filosofía en Rinoplastia Secundaria — Leila Freire · Roberto Ferrero" },
+      { time: "15:40", label: "🔴 Cirugías en vivo — Rinoplastia Secundaria — L. Freire · R. Ferrero" },
+      { time: "", label: "Moderador: Dr. Cristian Barbón" },
+      { time: "18:00", label: "Conferencia — Tercio superior y medio nasal — Cristian Simons" },
+      { time: "18:20", label: "Conferencia — Punta nasal en rinoplastia secundaria — Walter Humpola" },
+      { time: "18:40", label: "Conferencia — Injertos que definen la punta nasal — Claudia Ciuffi" },
+      { time: "19:00", label: "Conferencia — Infecciones en Rinoplastia — Heloisa Koerner" },
+      { time: "19:20", label: "Comentarios finales de los casos operados" },
+      { time: "", label: "L. Chinski (+ Expansión columelar) · G. Coelho (+ Nasal Tip Skin Fit)" },
+      { time: "", label: "L. Freire (+ base alar) · R. Ferrero (+ manto gel de fibrina)" },
+      { time: "21:00", label: "🎶  Cena y Concierto — Juanchi Álvarez (saxo y violín)" },
+    ];
+
+    const agendaDia2 = [
+      {time:"08:00",label:"Mi filosofía en Rejuvenecimiento Facial — P. García (Deep Plane) · R. Sanches (Frontoplastia)"},
+      {time:"10:00",label:"🔴 Cirugías en vivo — Deep Plane — P. García · R. Sánchez"},
+      {time:"10:10",label:"Conferencia — Huesos nasales (M. Cupito) · Tratamiento papada (L. Freire)"},
+      {time:"",     label:"Conferencia — Reducción frente (V. Cruz) · Front Handle (N. Reis) · Tercio medio (J. Trujillo)"},
+      {time:"13:00",label:"🍽️  Almuerzo"},
+      {time:"14:30",label:"Conferencia — Mentoplastia e implantes (R. Toledo) · Lifting tercio medio (E. de Masi)"},
+      {time:"",     label:"Conferencia — Contorno facial Mastoid Crevasse (G. Coelho)"},
+      {time:"16:00",label:"Mi filosofía en Rejuvenecimiento Facial — Reposicionamiento y Frontoplastia"},
+      {time:"",     label:"N. Reis · J. Trujillo · V. Cruz · C. Simons · S. De Paoli"},
+      {time:"16:30",label:"🔴 Cirugías en Rejuvenecimiento Facial — Casos 1 y 2 (Moderador: R. Toledo)"},
+      {time:"19:00",label:"Comentarios finales de los casos operados"},
+      {time:"",     label:"P. García (+ glándula submaxilar) · R. Sánchez (+ prevención orejas duende)"},
+      {time:"",     label:"N. Reis (+ Rejuve Lip) · V. Cruz (+ feminización) · J. Trujillo (+ Deep Plane modificado)"},
+    ];
+
+    const slidesEl = document.getElementById('slides');
+    const bar = document.getElementById('progressBar');
+    const counter = document.getElementById('counter');
+    const DURATION = 6000;
+    let current = 0, rafId = null, startTime = null;
+
+    // Doctor slides
+    doctors.forEach((d, i) => {
+      const div = document.createElement('div');
+      div.className = 'slide' + (i === 0 ? ' active' : '');
+      const flagSrc = flagMap[d.country] || '';
+      div.innerHTML = `<div class="card">
+    <div class="photo-col"><div class="circle-outer"><div class="ring-dot"></div><div class="circle-inner"><img src="fotos/${d.photo}" alt="${d.name}"/></div></div></div>
+    <div class="info-col">
+      <div class="line-top"></div>
+      <span class="role-badge${d.role === 'Director' ? ' director' : ''}">${d.role}</span>
+      <h2 class="doctor-name">${d.name.replace(' ', '<br>')}</h2>
+      <p class="specialty">${d.specialty}</p>
+      <div class="country-row">${flagSrc ? `<img class="flag-img" src="${flagSrc}" alt="${d.country}"/>` : ''}
+        <span class="country-name">${d.country}</span></div>
+      ${d.talk ? `<p class="talk">${d.talk}</p>` : ''}
+      ${d.ig ? `<p class="instagram"><span class="ig-at">@</span>${d.ig}</p>` : ''}
+      <div class="line-bot"></div>
+    </div></div>`;
+      slidesEl.appendChild(div);
+    });
+
+    // Agenda slide
+    const rows = agenda.map(a => `<div class="agenda-row"><span class="agenda-time">${a.time}</span><span class="agenda-label">${a.label}</span></div>`).join('');
+    const agDiv = document.createElement('div');
+    agDiv.className = 'slide agenda-slide';
+    agDiv.innerHTML = `<div class="agenda-wrap">
+  <div><p class="agenda-day-tag">DÍA 1 · JUEVES 14 DE MAYO 2026</p><h2 class="agenda-title">Programa · Rinoplastia</h2></div>
+  <div class="agenda-ticker-outer"><div class="agTicker"><div class="agenda-inner">${rows}${rows}</div></div></div>
+</div>`;
+    slidesEl.appendChild(agDiv);
+
+    // Agenda slide Día 2
+    const rows2 = agendaDia2.map(a => `<div class="agenda-row"><span class="agenda-time">${a.time}</span><span class="agenda-label">${a.label}</span></div>`).join('');
+    const agDiv2 = document.createElement('div');
+    agDiv2.className = 'slide agenda-slide';
+    agDiv2.innerHTML = `<div class="agenda-wrap">
+  <div><p class="agenda-day-tag">DÍA 2 · VIERNES 15 DE MAYO 2026</p><h2 class="agenda-title">Programa · Rejuvenecimiento Facial</h2></div>
+  <div class="agenda-ticker-outer"><div class="agTicker"><div class="agenda-inner">${rows2}${rows2}</div></div></div>
+</div>`;
+    slidesEl.appendChild(agDiv2);
+
+    const slides = document.querySelectorAll('.slide');
+    const TOTAL = slides.length;
+    counter.textContent = '1 / ' + TOTAL;
+
+    // Particles
+    const pEl = document.getElementById('particles');
+    for (let i = 0; i < 22; i++) {
+      const p = document.createElement('div'); p.className = 'particle';
+      const s = Math.random() * 55 + 10;
+      p.style.cssText = `width:${s}px;height:${s}px;left:${Math.random() * 100}%;animation-duration:${Math.random() * 18 + 10}s;animation-delay:${Math.random() * -25}s`;
+      pEl.appendChild(p);
+    }
+
+    // Agenda ticker
+    let agPos = 0, agRaf = null, agRunning = false;
+    function runTicker() {
+      if (agRunning) return; agRunning = true;
+      const inner = document.querySelector('.slide.active .agenda-inner');
+      if (!inner) return;
+      const half = inner.scrollHeight / 2;
+      (function tick() { agRaf = requestAnimationFrame(tick); agPos += 0.5; if (agPos >= half) agPos = 0; inner.style.transform = `translateY(-${agPos}px)` })();
+    }
+    function stopTicker() { agRunning = false; cancelAnimationFrame(agRaf); agPos = 0; }
+
+    function animateProg(dur, cb) {
+      cancelAnimationFrame(rafId); startTime = performance.now();
+      bar.style.transition = 'none'; bar.style.width = '0%';
+      requestAnimationFrame(() => requestAnimationFrame(function t(now) {
+        const p = Math.min(((now - startTime) / dur) * 100, 100);
+        bar.style.width = p + '%';
+        if (p < 100) rafId = requestAnimationFrame(t); else setTimeout(cb, 50);
+      }));
+    }
+
+    function showSlide(idx) {
+      slides[current].classList.remove('active');
+      current = ((idx % TOTAL) + TOTAL) % TOTAL;
+      slides[current].classList.add('active');
+      counter.textContent = (current + 1) + ' / ' + TOTAL;
+      if (slides[current].classList.contains('agenda-slide')) {
+        runTicker(); animateProg(20000, () => showSlide(current + 1));
+      } else {
+        stopTicker(); animateProg(DURATION, () => showSlide(current + 1));
+      }
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === ' ') { cancelAnimationFrame(rafId); showSlide(current + 1); }
+      if (e.key === 'ArrowLeft') { cancelAnimationFrame(rafId); showSlide(current - 1); }
+      if (e.key === 'f' || e.key === 'F') document.documentElement.requestFullscreen?.();
+    });
+
+    animateProg(DURATION, () => showSlide(1));
+
+Upload files
+
+
+  </script>
+</body>
+
+</html>
