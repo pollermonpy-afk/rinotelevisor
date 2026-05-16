@@ -613,20 +613,20 @@
       { time: "21:00", label: "🎶  Cena y Concierto — Juanchi Álvarez (saxo y violín)" },
     ];
 
-    const agendaDia2 = [
-      {time:"08:00",label:"Mi filosofía en Rejuvenecimiento Facial — P. García (Deep Plane) · R. Sanches (Frontoplastia)"},
-      {time:"10:00",label:"🔴 Cirugías en vivo — Deep Plane — P. García · R. Sánchez"},
-      {time:"10:10",label:"Conferencia — Huesos nasales (M. Cupito) · Tratamiento papada (L. Freire)"},
-      {time:"",     label:"Conferencia — Reducción frente (V. Cruz) · Front Handle (N. Reis) · Tercio medio (J. Trujillo)"},
-      {time:"13:00",label:"🍽️  Almuerzo"},
-      {time:"14:30",label:"Conferencia — Mentoplastia e implantes (R. Toledo) · Lifting tercio medio (E. de Masi)"},
-      {time:"",     label:"Conferencia — Contorno facial Mastoid Crevasse (G. Coelho)"},
-      {time:"16:00",label:"Mi filosofía en Rejuvenecimiento Facial — Reposicionamiento y Frontoplastia"},
-      {time:"",     label:"N. Reis · J. Trujillo · V. Cruz · C. Simons · S. De Paoli"},
-      {time:"16:30",label:"🔴 Cirugías en Rejuvenecimiento Facial — Casos 1 y 2 (Moderador: R. Toledo)"},
-      {time:"19:00",label:"Comentarios finales de los casos operados"},
-      {time:"",     label:"P. García (+ glándula submaxilar) · R. Sánchez (+ prevención orejas duende)"},
-      {time:"",     label:"N. Reis (+ Rejuve Lip) · V. Cruz (+ feminización) · J. Trujillo (+ Deep Plane modificado)"},
+    const agendaDia3 = [
+      {time:"08:00",label:"Conferencia: Casos de Oculoplastia / Análisis video fotográfico"},
+      {time:"",     label:"Caso 1: Blefaro. sup/inf, Ptosis y Reposicionamiento — E. De Masi"},
+      {time:"",     label:"Caso 2: Blefaro. sup/inf asociada a cantoplastia — P. García"},
+      {time:"",     label:"Reposicionamiento de cejas (N. Reis) · Recanalización vía lagrimal (N. Reis/H. Céspedes)"},
+      {time:"09:00",label:"🔴 Cirugía en vivo: Cirugías de Oculoplastia"},
+      {time:"",     label:"Caso 1: E. de Masi · Caso 2: P. García y N. Reis (Moderadora: H. Koerner)"},
+      {time:"09:10",label:"Conferencia: Rejuvenecimiento Periorbitario — Leila Freire"},
+      {time:"11:00",label:"Conferencia: Refinamientos quirúrgicos con técnicas mínimamente invasivas"},
+      {time:"",     label:"Coordinadora: Claudia Guaqueta"},
+      {time:"",     label:"Procedimientos mín. invasivos (F. Diniz) · Biotecnologías regenerativas (C. Ciuffi)"},
+      {time:"",     label:"Terapias alternativas para refinamiento quirúrgico — Humberto Ferreira"},
+      {time:"13:00",label:"Clausura · Entrega de certificados · Foto grupal"},
+      {time:"",     label:"🍽️  Almuerzo"},
     ];
 
     const slidesEl = document.getElementById('slides');
@@ -656,15 +656,15 @@
       slidesEl.appendChild(div);
     });
 
-    // Agenda slide Día 2
-    const rows2 = agendaDia2.map(a => `<div class="agenda-row"><span class="agenda-time">${a.time}</span><span class="agenda-label">${a.label}</span></div>`).join('');
-    const agDiv2 = document.createElement('div');
-    agDiv2.className = 'slide agenda-slide';
-    agDiv2.innerHTML = `<div class="agenda-wrap">
-  <div><p class="agenda-day-tag">DÍA 2 · VIERNES 15 DE MAYO 2026</p><h2 class="agenda-title">Programa · Rejuvenecimiento Facial</h2></div>
-  <div class="agenda-ticker-outer"><div class="agTicker"><div class="agenda-inner">${rows2}${rows2}</div></div></div>
+    // Agenda slide Día 3
+    const rows3 = agendaDia3.map(a => `<div class="agenda-row"><span class="agenda-time">${a.time}</span><span class="agenda-label">${a.label}</span></div>`).join('');
+    const agDiv3 = document.createElement('div');
+    agDiv3.className = 'slide agenda-slide';
+    agDiv3.innerHTML = `<div class="agenda-wrap">
+  <div><p class="agenda-day-tag">DÍA 3 · SÁBADO 16 DE MAYO 2026</p><h2 class="agenda-title">Programa · Oculoplastia</h2></div>
+  <div class="agenda-ticker-outer"><div class="agTicker"><div class="agenda-inner">${rows3}${rows3}</div></div></div>
 </div>`;
-    slidesEl.appendChild(agDiv2);
+    slidesEl.appendChild(agDiv3);
 
     const slides = document.querySelectorAll('.slide');
     const TOTAL = slides.length;
